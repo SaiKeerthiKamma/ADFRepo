@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "CSVOutput",
+						"referenceName": "parquet_DS",
 						"type": "DatasetReference"
 					},
 					"name": "sink"
@@ -46,12 +46,18 @@
 				"     partitionBy('hash', 1)) ~> LookForNULLs@(hasNULLs, noNULLs)",
 				"LookForNULLs@noNULLs sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     partitionBy('hash', 1),",
+				"     preCommands: [],",
+				"     postCommands: []) ~> sink"
 			]
 		}
 	}
